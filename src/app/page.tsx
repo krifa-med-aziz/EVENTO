@@ -10,7 +10,7 @@ export default function Home() {
         Browse more than{" "}
         <span className="font-bold italic underline text-[#a4f839]">
           10,000 events
-        </span>
+        </span>{" "}
         worldwide
       </p>
       <Searchform />
