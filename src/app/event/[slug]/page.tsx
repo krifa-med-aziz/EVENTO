@@ -5,7 +5,10 @@ import Image from "next/image";
 export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = await params;
   const response = await fetch(
-    `https://bytegrad.com/course-assets/projects/evento/api/events/${slug}`
+    `https://bytegrad.com/course-assets/projects/evento/api/events/${slug}`,
+    {
+      cache: "force-cache",
+    }
   );
   const event: TEvent = await response.json();
   return (
