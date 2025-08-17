@@ -1,10 +1,34 @@
-import { TEvent } from "@/lib/types";
+"use client";
+import { TEvent } from "@prisma/client";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { useRef } from "react";
+
+const MotionLink = motion(Link);
 
 export default function EventCard({ event }: { event: TEvent }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["0 1", "1.5 1"],
+  });
+  const scaleProgress = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
+  const opacityProgress = useTransform(scrollYProgress, [0, 1], [0.3, 1]);
   return (
-    <Link href={`/event/${event.slug}`} className="h-[380px] max-w-[500px]">
+    <MotionLink
+      ref={ref}
+      style={{
+        scale: scaleProgress,
+        opacity: opacityProgress,
+      }}
+      initial={{
+        opacity: 0,
+        scale: 0.8,
+      }}
+      href={`/event/${event.slug}`}
+      className="h-[380px] max-w-[500px]"
+    >
       <section className="w-full h-full relative flex flex-col bg-white/[3%] rounded-xl overflow-hidden hover:scale-105 active:scale-[1.02] transition">
         <Image
           src={event.imageUrl}
@@ -29,6 +53,6 @@ export default function EventCard({ event }: { event: TEvent }) {
           </p>
         </section>
       </section>
-    </Link>
+    </MotionLink>
   );
 }

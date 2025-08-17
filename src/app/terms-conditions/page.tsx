@@ -1,5 +1,9 @@
 import React from "react";
 
 export default function page() {
-  return <div>terms & conditions</div>;
+  return (
+    <main className="h-[300px] flex justify-center items-center uppercase font-bold text-xl sm:text-3xl text-white/75 text-center">
+      terms & conditions
+    </main>
+  );
 }

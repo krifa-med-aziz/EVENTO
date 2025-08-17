@@ -2,8 +2,23 @@ import Eventlist from "@/components/Event-list";
 import H1 from "@/components/H1";
 import React, { Suspense } from "react";
 import Loading from "./loading";
+import { Metadata } from "next";
 
-export default async function page({ params }: { params: { city: string } }) {
+type Props = {
+  params: { city: string };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { city } = await params;
+  return {
+    title:
+      city === "all"
+        ? "All Events"
+        : `Events in ${city[0].toLocaleUpperCase() + city.slice(1)}`,
+  };
+}
+
+export default async function page({ params }: Props) {
   const { city } = await params;
 
   return (
