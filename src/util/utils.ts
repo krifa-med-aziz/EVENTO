@@ -1,7 +1,7 @@
 import prisma from "@/lib/db";
 import { notFound } from "next/navigation";
 
-export async function getEvents(city: string) {
+export async function getEvents(city: string, page = 1) {
   const events = await prisma.tEvent.findMany({
     where: {
       city:
@@ -12,8 +12,21 @@ export async function getEvents(city: string) {
     orderBy: {
       date: "asc",
     },
+    take: 6,
+    skip: (page - 1) * 6,
   });
-  return events;
+
+  let totalCount;
+  if (city === "all") {
+    totalCount = await prisma.tEvent.count();
+  } else {
+    totalCount = await prisma.tEvent.count({
+      where: {
+        city: (city = city[0].toLocaleUpperCase() + city.slice(1)),
+      },
+    });
+  }
+  return { events, totalCount };
 }
 
 export async function getEvent(slug: string) {
