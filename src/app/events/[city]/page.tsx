@@ -1,19 +1,23 @@
-import Eventlist from "@/components/Event-list";
-import H1 from "@/components/H1";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import Loading from "./loading";
 import { Metadata } from "next";
-import z from "zod";
+import { z } from "zod";
+import Eventlist from "@/components/Event-list";
+import H1 from "@/components/H1";
 
 type Props = {
-  params: { city: string };
+  params: {
+    city: string;
+  };
 };
 
-type EventPageProps = Props & {
+type EventsPageProps = Props & {
   searchParams: { [key: string]: string | string[] | undefined };
 };
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { city } = await params;
+
+export function generateMetadata({ params }: Props): Metadata {
+  const city = params.city;
+
   return {
     title:
       city === "all"
@@ -24,13 +28,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const pageNumberSchema = z.coerce.number().int().positive().optional();
 
-export default async function page({ params, searchParams }: EventPageProps) {
-  const { city } = await params;
-  const { page } = await searchParams;
-  const parsedPage = pageNumberSchema.safeParse(page);
+export default async function EventsPage({
+  params,
+  searchParams,
+}: EventsPageProps) {
+  const city = params.city;
+  const parsedPage = pageNumberSchema.safeParse(searchParams.page);
   if (!parsedPage.success) {
-    throw new Error("Invalid page number!");
+    throw new Error("Invalid page number");
   }
+
   return (
     <main className="max-w-6xl mx-auto flex flex-col items-center py-24 px-[20px] min-h-[110vh]">
       <H1 className="mb-15 sm:mb-28">
@@ -38,7 +45,7 @@ export default async function page({ params, searchParams }: EventPageProps) {
         {city !== "all" &&
           `Events in ${city[0].toLocaleUpperCase() + city.slice(1)}`}
       </H1>
-      <Suspense key={city + page} fallback={<Loading />}>
+      <Suspense key={city + parsedPage.data} fallback={<Loading />}>
         <Eventlist city={city} page={parsedPage.data} />
       </Suspense>
     </main>

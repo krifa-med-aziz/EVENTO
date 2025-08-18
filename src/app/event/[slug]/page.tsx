@@ -2,24 +2,24 @@ import H1 from "@/components/H1";
 import { getEvent } from "@/util/utils";
 import { Metadata } from "next";
 import Image from "next/image";
-type EventPageProps = {
+type PageProps = {
   params: {
     slug: string;
   };
 };
 
-export async function generateMetadata({
+export const generateMetadata = async ({
   params,
-}: EventPageProps): Promise<Metadata> {
-  const { slug } = await params;
+}: PageProps): Promise<Metadata> => {
+  const slug = params.slug;
   const event = await getEvent(slug);
   return {
     title: event.name,
   };
-}
+};
 
-export default async function Page({ params }: EventPageProps) {
-  const { slug } = await params;
+export default async function Page({ params }: PageProps) {
+  const { slug } = params;
   const event = await getEvent(slug);
   return (
     <main>
