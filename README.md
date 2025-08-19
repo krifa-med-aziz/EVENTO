@@ -1,6 +1,21 @@
-# Evento
+<div align="center">
 
-A modern event discovery web application built with Next.js 15, TypeScript, Prisma, and Tailwind CSS.
+# EVENTO
+
+![Last Commit](https://img.shields.io/github/last-commit/krifa-med-aziz/EVENTO)
+![Languages](https://img.shields.io/github/languages/count/krifa-med-aziz/EVENTO)
+![Top Language](https://img.shields.io/github/languages/top/krifa-med-aziz/EVENTO)
+
+</div>
+
+<div align="center">
+  <img src="https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=next.js&logoColor=white"/>
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white"/>
+  <img src="https://img.shields.io/badge/TailwindCSS-38B2AC?style=flat-square&logo=tailwindcss&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Radix_UI-000000?style=flat-square&logo=radix-ui&logoColor=white"/>
+</div>
+
+---
 
 ## Features
 
